@@ -1,25 +1,29 @@
-
-
+// Definición de las acciones
 export type BudgetActions =
-    { type: 'add-buget', payload: { budget: number } };
+    { type: 'add-budget', payload: { budget: number } };
 
+// Definición del estado
 export type BudgetState = {
     budget: number;
-}
+};
 
+// Estado inicial
 export const initialState: BudgetState = {
-    budget: 0
-}
+    budget: 0,
+};
 
-export const budgetReducer = () => (
+// Reducer
+export const budgetReducer = (
     state: BudgetState = initialState,
     action: BudgetActions
-) => {
-    if (action.type === 'add-buget') {
-        return {
-            ...state,
-            budget: action.payload.budget
-        }
+): BudgetState => {
+    switch (action.type) {
+        case 'add-budget':
+            return {
+                ...state,
+                budget: action.payload.budget,
+            };
+        default:
+            return state;
     }
-    return state;
-}
+};
