@@ -28,7 +28,7 @@ export default function BudgetForm() {
           htmlFor="budget"
           className="text-4xl text-blue-600 font-bold text-center"
         >
-          Definir Presupuesto
+          Definir Cantidad
         </label>
         <input
           id="budgetID"
