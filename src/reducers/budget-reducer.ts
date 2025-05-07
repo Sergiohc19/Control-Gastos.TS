@@ -4,26 +4,37 @@ export type BudgetActions =
 
 // Definición del estado
 export type BudgetState = {
-    budget: number;
+    budget: number
+    modal: boolean
 };
 
 // Estado inicial
 export const initialState: BudgetState = {
     budget: 0,
+    modal: false
 };
 
 // Reducer
 export const budgetReducer = (
     state: BudgetState = initialState,
     action: BudgetActions
-): BudgetState => {
-    switch (action.type) {
-        case 'add-budget':
-            return {
-                ...state,
-                budget: action.payload.budget,
-            };
-        default:
-            return state;
+) => {
+    if (action.type === 'add-budget') {
+
+        return {
+            ...state,
+            budget: action.payload.budget,
+    };
+
+}
+    
+    if(action.type === "show-modal") {
+        return {
+            ...state,
+            modal:true
+        }
     }
+    return state;
+
+
 };
