@@ -1,6 +1,8 @@
 // Definición de las acciones
 export type BudgetActions =
-    { type: 'add-budget', payload: { budget: number } };
+    { type: 'add-budget', payload: { budget: number } }  |
+    { type: 'show-modal' }  |
+    { type: 'close-modal' } ;
 
 // Definición del estado
 export type BudgetState = {
@@ -24,17 +26,23 @@ export const budgetReducer = (
         return {
             ...state,
             budget: action.payload.budget,
-    };
+        };
 
-}
-    
-    if(action.type === "show-modal") {
+    }
+
+    if (action.type === "show-modal") {
         return {
             ...state,
-            modal:true
+            modal: true
+        }
+    }
+  
+    if (action.type === "close-modal") {
+        return {
+            ...state,
+            modal: false
         }
     }
     return state;
-
 
 };
