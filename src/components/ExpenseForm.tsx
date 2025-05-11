@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import type { DraftExpense, Value } from "../types";
 import { categories } from "../data/categories";
 import DatePicker from "react-date-picker";
@@ -6,7 +6,6 @@ import "react-calendar/dist/Calendar.css";
 import "react-date-picker/dist/DatePicker.css";
 import { ErrorMessage } from "./ErrorMessage";
 import { useBudget } from "../hooks/useBudget";
-
 
 export default function ExpenseForm() {
   const [expense, setExpense] = useState<DraftExpense>({
@@ -17,7 +16,17 @@ export default function ExpenseForm() {
   });
 
   const [error, setError] = useState("");
-  const { dispatch } = useBudget();
+  const { dispatch, state } = useBudget();
+
+  useEffect(() => {
+    if (state.editingId) {
+      const editingExpense = state.expense.filter(
+        (currenExpense) => currenExpense.id === state.editingId
+      )[0];
+      setExpense(editingExpense)
+     
+    }
+  }, [state.editingId]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -40,17 +49,17 @@ export default function ExpenseForm() {
       setError("Todos los campos son obligatorios");
       return;
     }
-      dispatch({
-        type: "add-expense",
-        payload: { expense },
-      });
+    dispatch({
+      type: "add-expense",
+      payload: { expense },
+    });
 
-      setExpense({
-        expenseName: "",  
-        amount: 0,
-        category: "",
-        date: new Date(),
-      });
+    setExpense({
+      expenseName: "",
+      amount: 0,
+      category: "",
+      date: new Date(),
+    });
   };
 
   return (
@@ -60,7 +69,6 @@ export default function ExpenseForm() {
       </legend>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
-
 
       <div className="flex flex-col gap-2">
         <label htmlFor="expenseName" className="text-xl">
