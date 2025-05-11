@@ -1,18 +1,32 @@
-import { useState } from "react";
-import type { DraftExpense } from "../types";
+import { ChangeEvent, useState } from "react";
+import type { DraftExpense, Value } from "../types";
 import { categories } from "../data/categories";
 import DatePicker from "react-date-picker";
-import 'react-calendar/dist/Calendar.css';
+import "react-calendar/dist/Calendar.css";
 import "react-date-picker/dist/DatePicker.css";
 
 export default function ExpenseForm() {
+  const [expense, setExpense] = useState<DraftExpense>({
+    expenseName: "",
+    amount: 0,
+    category: "",
+    date: new Date(),
+  });
 
-const [expense, setExpense] = useState<DraftExpense>({
-  expenseName: "",
-  amount: 0,
-  category: "",
-  date: new Date(),
-});
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const isAmountField = ["amount"].includes(name);
+  setExpense({
+    ...expense, 
+    [name]: isAmountField ? +value : value,
+  });
+  };
+
+  const handleChangeDate = (value: Value) => {
+    setExpense({ ...expense, date: value });
+  };
 
   return (
     <form className="space-y-5">
@@ -29,7 +43,8 @@ const [expense, setExpense] = useState<DraftExpense>({
           placeholder="Añade el Nombre del gasto"
           className="bg-slate-100 p-2"
           name="expenseName"
-          value={expense.expenseName}
+          // value={expense.expenseName}
+          onChange={handleChange}
         />
       </div>
 
@@ -43,7 +58,8 @@ const [expense, setExpense] = useState<DraftExpense>({
           placeholder="Añade la cantidad del gasto: ej. 300"
           className="bg-slate-100 p-2"
           name="amount"
-          value={expense.amount}
+          // value={expense.amount}
+          onChange={handleChange}
         />
       </div>
 
@@ -51,8 +67,10 @@ const [expense, setExpense] = useState<DraftExpense>({
         <label htmlFor="categoy" className="text-xl">
           Categoría:
         </label>
-        <select id="category" className="bg-slate-100 p-2" name="category">
-          <option value={expense.category} >-- Seleccione --</option>
+        <select id="category" className="bg-slate-100 p-2" name="category"
+        onChange={handleChange}
+        >
+          <option value={expense.category}>-- Seleccione --</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -61,17 +79,16 @@ const [expense, setExpense] = useState<DraftExpense>({
         </select>
       </div>
 
-
-   <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         <label htmlFor="amount" className="text-xl">
-        Fecha Gasto:
+          Fecha Gasto:
         </label>
         <DatePicker
           className="bg-slate-100 p-2 border-0"
           value={expense.date}
-          />
+          onChange={handleChangeDate}
+        />
       </div>
-
 
       <input
         type="submit"
