@@ -5,7 +5,7 @@ import DatePicker from "react-date-picker";
 import "react-calendar/dist/Calendar.css";
 import "react-date-picker/dist/DatePicker.css";
 import { ErrorMessage } from "./ErrorMessage";
-import { useBudget } from "../context/BudgetContext";
+import { useBudget } from "../hooks/useBudget";
 
 
 export default function ExpenseForm() {
@@ -26,7 +26,7 @@ export default function ExpenseForm() {
     const isAmountField = ["amount"].includes(name);
     setExpense({
       ...expense,
-      [name]: isAmountField ? +value : value,
+      [name]: isAmountField ? Number(value) : value,
     });
   };
 
@@ -43,6 +43,13 @@ export default function ExpenseForm() {
       dispatch({
         type: "add-expense",
         payload: { expense },
+      });
+
+      setExpense({
+        expenseName: "",  
+        amount: 0,
+        category: "",
+        date: new Date(),
       });
   };
 
@@ -65,7 +72,7 @@ export default function ExpenseForm() {
           placeholder="Añade el Nombre del gasto"
           className="bg-slate-100 p-2"
           name="expenseName"
-          // value={expense.expenseName}
+          value={expense.expenseName}
           onChange={handleChange}
         />
       </div>
@@ -80,7 +87,7 @@ export default function ExpenseForm() {
           placeholder="Añade la cantidad del gasto: ej. 300"
           className="bg-slate-100 p-2"
           name="amount"
-          // value={expense.amount}
+          value={expense.amount}
           onChange={handleChange}
         />
       </div>
@@ -94,8 +101,9 @@ export default function ExpenseForm() {
           className="bg-slate-100 p-2"
           name="category"
           onChange={handleChange}
+          value={expense.category}
         >
-          <option value={expense.category}>-- Seleccione --</option>
+          <option value="">-- Seleccione --</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
