@@ -23,10 +23,9 @@ export default function ExpenseForm() {
       const editingExpense = state.expense.filter(
         (currenExpense) => currenExpense.id === state.editingId
       )[0];
-      setExpense(editingExpense)
-     
+      setExpense(editingExpense);
     }
-  }, [state.editingId]);
+  }, [state.editingId, state.expense]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -49,10 +48,14 @@ export default function ExpenseForm() {
       setError("Todos los campos son obligatorios");
       return;
     }
-    dispatch({
-      type: "add-expense",
-      payload: { expense },
-    });
+
+    if (state.editingId) {
+      dispatch({type: "edit-expense", payload: { expense: { id: state.editingId, ...expense } }});
+    } else {
+      dispatch({type: "add-expense", payload: { expense }}); 
+    }
+
+   
 
     setExpense({
       expenseName: "",
