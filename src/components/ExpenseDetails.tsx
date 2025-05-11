@@ -18,9 +18,7 @@ type ExpenseDetailsProps = {
 };
 
 export const ExpenseDetails = ({ expense }: ExpenseDetailsProps) => {
-
-
-    const { dispatch } = useBudget();
+  const { dispatch } = useBudget();
 
   const categoryInfo = useMemo(
     () => categories.filter((cat) => cat.id === expense.category)[0],
@@ -29,7 +27,10 @@ export const ExpenseDetails = ({ expense }: ExpenseDetailsProps) => {
 
   const leadingActions = () => (
     <LeadingActions>
-      <SwipeAction onClick={() => {}} destructive={true}>
+      <SwipeAction
+        onClick={() =>
+          dispatch({ type: "update-expense", payload: { id: expense.id}})}
+      >
         Actualizar
       </SwipeAction>
     </LeadingActions>
@@ -37,7 +38,13 @@ export const ExpenseDetails = ({ expense }: ExpenseDetailsProps) => {
 
   const trailingActions = () => (
     <TrailingActions>
-      <SwipeAction onClick={() => dispatch({type: 'delete-expense', payload: {id: expense.id}})}>Eliminar</SwipeAction>
+      <SwipeAction
+        onClick={() =>
+          dispatch({ type: "delete-expense", payload: { id: expense.id } })
+        }
+      >
+        Eliminar
+      </SwipeAction>
     </TrailingActions>
   );
 
