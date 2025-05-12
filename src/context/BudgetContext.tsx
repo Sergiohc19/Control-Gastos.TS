@@ -11,7 +11,6 @@ type BudgetContextProps = {
   dispatch: Dispatch<BudgetActions>;
     totalExpenses: number;
     remainingBudget: number;
-    
 };
 
 type BudgetProviderProps = {
