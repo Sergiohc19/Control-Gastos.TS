@@ -9,10 +9,9 @@ export type BudgetActions =
     { type: 'add-expense', payload: { expense: DraftExpense } } |
     { type: 'delete-expense', payload: { id: Expense['id'] } } |
     { type: 'update-expense', payload: { id: Expense['id'] } } |
-    { type: 'edit-expense', payload: { expense: Expense } };
-
-
-
+    { type: 'edit-expense', payload: { expense: Expense } } |
+    { type: 'reset-app' } 
+ 
 
 
 // Definición del estado
@@ -132,6 +131,16 @@ export const budgetReducer = (
 
 
 
+        }
+    }
+
+    if (action.type === "reset-app") {
+
+
+        return {
+           ...state,
+            budget: 0,
+            expense: [],
         }
     }
 
