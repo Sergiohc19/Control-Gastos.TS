@@ -4,13 +4,14 @@ import { useBudget } from "./hooks/useBudget";
 import BudgetTracker from "./components/BudgetTracker";
 import ExpenseModal from "./components/ExpenseModal";
 import { ExpenseList } from "./components/ExpenseList";
+import { FilterBYCategory } from "./components/FilterBYCategory";
 
 function App() {
   const { state } = useBudget();
   const isValidBudget = useMemo(() => state.budget > 0, [state.budget]);
 
   useEffect(() => {
-    localStorage.setItem("budget" , state.budget.toString());
+    localStorage.setItem("budget", state.budget.toString());
     localStorage.setItem("expense", JSON.stringify(state.expense));
   }, [state]);
 
@@ -26,6 +27,7 @@ function App() {
       </div>
       {isValidBudget && (
         <main className="max-w-3xl mx-auto py-10">
+          <FilterBYCategory />
           <ExpenseList />
           <ExpenseModal />
         </main>
