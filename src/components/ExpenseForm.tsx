@@ -16,7 +16,9 @@ export default function ExpenseForm() {
   });
 
   const [error, setError] = useState("");
-  const { dispatch, state } = useBudget();
+  const [previusAmount, setPreviusAmount] = useState(0);
+
+  const { dispatch, state, remainingBudget } = useBudget();
 
   useEffect(() => {
     if (state.editingId) {
@@ -24,8 +26,9 @@ export default function ExpenseForm() {
         (currenExpense) => currenExpense.id === state.editingId
       )[0];
       setExpense(editingExpense);
+      setPreviusAmount(editingExpense.amount);
     }
-  }, [state.editingId, state.expense]);
+  }, [state.editingId]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -49,13 +52,19 @@ export default function ExpenseForm() {
       return;
     }
 
-    if (state.editingId) {
-      dispatch({type: "edit-expense", payload: { expense: { id: state.editingId, ...expense } }});
-    } else {
-      dispatch({type: "add-expense", payload: { expense }}); 
+    if (expense.amount - previusAmount > remainingBudget) {
+      setError("El gasto se sale del presupuesto");
+      return;
     }
 
-   
+    if (state.editingId) {
+      dispatch({
+        type: "edit-expense",
+        payload: { expense: { id: state.editingId, ...expense } },
+      });
+    } else {
+      dispatch({ type: "add-expense", payload: { expense } });
+    }
 
     setExpense({
       expenseName: "",
@@ -63,12 +72,13 @@ export default function ExpenseForm() {
       category: "",
       date: new Date(),
     });
+    setPreviusAmount(0);
   };
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
       <legend className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2">
-       {state.editingId ? 'Guardar cambios' : 'Nuevo Gasto'}
+        {state.editingId ? "Guardar cambios" : "Nuevo Gasto"}
       </legend>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -138,8 +148,7 @@ export default function ExpenseForm() {
         type="submit"
         className="bg-blue-600 cursor pointer w-full p-2 text-white uppercase
       font-bold rounded-lg"
-        value={state.editingId ? 'Guardar cambios' : 'Registrar Gasto'}
-
+        value={state.editingId ? "Guardar cambios" : "Registrar Gasto"}
       ></input>
     </form>
   );
