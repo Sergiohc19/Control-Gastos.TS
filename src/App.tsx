@@ -28,7 +28,7 @@ function App() {
         path="/"
         element={
           <>
-            <header className="bg-blue-600 py-8 max-h-72 relative">
+            <header className="bg-rose-300 py-8 max-h-72 relative">
               <h1 className="uppercase text-center font-black text-4xl text-white">
                 Planificiador de Gastos
               </h1>
@@ -37,13 +37,13 @@ function App() {
               <div className="absolute top-8 right-8 flex gap-2">
                 <Link
                   to="/login"
-                  className="bg-blue-900 text-white py-2 rounded hover:bg-cyan-700 px-4"
+                  className="bg-pink-600 text-white py-2 rounded hover:bg-pink-500 px-4"
                 >
                   Iniciar Sesión
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-blue-900 text-white py-2 rounded hover:bg-cyan-700 px-4"
+                  className="bg-pink-600 text-white py-2 rounded hover:bg-pink-500 px-4"
                 >
                   Registrarse
                 </Link>

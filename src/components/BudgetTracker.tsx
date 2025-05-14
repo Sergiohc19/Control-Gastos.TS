@@ -31,7 +31,7 @@ const percentage = +((totalExpenses / state.budget * 100).toFixed(2));
       <div className="flex flex-col justify-center items-center gap-8">
         <button
           type="button"
-          className="bg-pink-600 w-full p-2 text-white font-bold uppercase rounded-lg"
+          className="bg-pink-600 w-full p-2 text-white font-bold uppercase rounded-lg  hover:bg-pink-500"
           onClick={() => dispatch({ type: "reset-app" })}
         >
           Resetear App
