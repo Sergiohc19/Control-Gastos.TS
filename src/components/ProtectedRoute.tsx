@@ -1,13 +1,13 @@
 // src/components/ProtectedRoute.tsx
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthState } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 
 const ProtectedRoute: React.FC = () => {
-  const { currentUser } = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
-  if (!currentUser) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 

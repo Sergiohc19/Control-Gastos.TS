@@ -5,7 +5,7 @@ import { saveToFirestore } from '../helpers/syncFirestone';
 import { useBudget } from '../hooks/useBudget';
 
 export const useSyncExpenses = () => {
-  const { currentUser } = useAuthState(auth);
+  const [currentUser] = useAuthState(auth);
   const { state } = useBudget();
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export const useSyncExpenses = () => {
       budget: state.budget,
       remaining,
       expenses: state.expense,
+      createdAt: now,
     };
 
     saveToFirestore(currentUser.uid, monthKey, monthlyData);

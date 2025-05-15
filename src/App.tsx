@@ -29,21 +29,23 @@ function App() {
         element={
           <>
             <header className="bg-rose-300 py-8 max-h-72 relative">
-              <h1 className="uppercase text-center font-black text-4xl text-white">
+              <h1 className="uppercase text-center font-black text-4xl text-white max-sm:text-sm max-sm:text-center pr-20 ">
                 Planificiador de Gastos
               </h1>
 
               {/* Botones alineados a la derecha del header */}
-              <div className="absolute top-8 right-8 flex gap-2">
+              <div className="absolute top-8 right-8 flex flex-col gap-2 max-sm:top-3 max-sm:right-3 sm:flex-row">
                 <Link
                   to="/login"
-                  className="bg-pink-600 text-white py-2 rounded hover:bg-pink-500 px-4"
+                  className="bg-pink-600 text-white py-2  px-4 rounded  max-sm:text-xs  max-sm:py-1 max-sm:px-1  max-sm:text-center hover:bg-pink-500 transition-all 
+               "
                 >
                   Iniciar Sesión
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-pink-600 text-white py-2 rounded hover:bg-pink-500 px-4"
+                  className="bg-pink-600 text-white py-2 px-4 rounded max-sm:text-xs  max-sm:py-1 max-sm:px-1 max-sm:text-center   hover:bg-pink-500 transition-all 
+              "
                 >
                   Registrarse
                 </Link>
