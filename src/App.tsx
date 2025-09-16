@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Routes, Route, Link } from "react-router-dom"; // Asegúrate de tener esto importado
+import { Routes, Route } from "react-router-dom"; // Asegúrate de tener esto importado
 import BudgetForm from "./components/BudgetForm";
 import { useBudget } from "./hooks/useBudget";
 import BudgetTracker from "./components/BudgetTracker";
@@ -34,7 +34,7 @@ function App() {
               </h1>
 
               {/* Botones alineados a la derecha del header */}
-              <div className="absolute top-8 right-8 flex flex-col gap-2 max-sm:top-3 max-sm:right-3 sm:flex-row">
+              {/* <div className="absolute top-8 right-8 flex flex-col gap-2 max-sm:top-3 max-sm:right-3 sm:flex-row">
                 <Link
                   to="/login"
                   className="bg-pink-600 text-white py-2  px-4 rounded  max-sm:text-xs  max-sm:py-1 max-sm:px-1  max-sm:text-center hover:bg-pink-500 transition-all 
@@ -49,7 +49,7 @@ function App() {
                 >
                   Registrarse
                 </Link>
-              </div>
+              </div> */}
             </header>
 
             <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
